@@ -263,19 +263,8 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 @run_async
 @user_admin
 def echo(update: Update, context: CallbackContext):
-    args = update.effective_message.text.split(None, 1)
-    message = update.effective_message
-
-    if message.reply_to_message:
-        message.reply_to_message.reply_text(
-            args[1], parse_mode="MARKDOWN", disable_web_page_preview=True)
-    else:
-        message.reply_text(
-            args[1],
-            quote=False,
-            parse_mode="MARKDOWN",
-            disable_web_page_preview=True)
-    message.delete()
+    chat_id = update.message.chat.id
+update.message.reply_to_message.copy(chat_id)
 
 
 def markdown_help_sender(update: Update):
